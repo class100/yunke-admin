@@ -27,7 +27,7 @@ type (
 )
 
 func (ca *ClientAdmin) request(
-	path yunke.ApiPath,
+	path core.ApiPath,
 	method gox.HttpMethod,
 	params interface{}, pathParams map[string]string,
 	rsp interface{},

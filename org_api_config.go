@@ -6,9 +6,9 @@ import (
 )
 
 // UpdateConfig 更新配置
-func (co *ClientOrg) UpdateConfig(name yunke.ConfigName, value interface{}, version yunke.ApiVersion) (config *yunke.Config, err error) {
-	config = new(yunke.Config)
-	err = co.requestApi(yunke.OrgApiConfigUpdateUrl, gox.HttpMethodPut, value, map[string]string{
+func (co *ClientOrg) UpdateConfig(name core.ConfigName, value interface{}, version core.ApiVersion) (config *core.Config, err error) {
+	config = new(core.Config)
+	err = co.requestApi(core.OrgApiConfigUpdateUrl, gox.HttpMethodPut, value, map[string]string{
 		"name": string(name),
 	}, version, config)
 

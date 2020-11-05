@@ -24,21 +24,21 @@ type ClientOrg struct {
 }
 
 func (co *ClientOrg) requestApi(
-	path yunke.ApiPath,
+	path core.ApiPath,
 	method gox.HttpMethod,
 	params interface{}, pathParams map[string]string,
-	version yunke.ApiVersion,
+	version core.ApiVersion,
 	rsp interface{},
 ) (err error) {
-	return co.request(path, yunke.UrlApiPrefix, method, params, pathParams, version, rsp)
+	return co.request(path, core.UrlApiPrefix, method, params, pathParams, version, rsp)
 }
 
 func (co *ClientOrg) request(
-	path yunke.ApiPath,
+	path core.ApiPath,
 	prefix string,
 	method gox.HttpMethod,
 	params interface{}, pathParams map[string]string,
-	version yunke.ApiVersion,
+	version core.ApiVersion,
 	rsp interface{},
 ) (err error) {
 	var (
@@ -51,7 +51,7 @@ func (co *ClientOrg) request(
 	)
 
 	// 修正请求地址为全路径
-	orgConfig := yunke.OrgConfig{
+	orgConfig := core.OrgConfig{
 		Url:  co.Url,
 		Name: co.Name,
 	}
