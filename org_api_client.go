@@ -6,7 +6,7 @@ import (
 )
 
 // AddClient 添加客户端
-func (oc *OrgClient) AddClient(client yunke.BaseClient, version yunke.ApiVersion) (c *yunke.BaseClient, err error) {
+func (co *ClientOrg) AddClient(client yunke.BaseClient, version yunke.ApiVersion) (c *yunke.BaseClient, err error) {
 	c = new(yunke.BaseClient)
 	orgClient := &struct {
 		yunke.BaseClient
@@ -20,7 +20,7 @@ func (oc *OrgClient) AddClient(client yunke.BaseClient, version yunke.ApiVersion
 	// 清空原来的文件（防止提交的数据和机构数据定义有冲突）
 	orgClient.File = ""
 
-	err = oc.requestApi(yunke.OrgApiClientAddUrl, gox.HttpMethodPost, orgClient, nil, version, c)
+	err = co.requestApi(yunke.OrgApiClientAddUrl, gox.HttpMethodPost, orgClient, nil, version, c)
 
 	return
 }

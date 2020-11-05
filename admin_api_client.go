@@ -8,9 +8,9 @@ import (
 )
 
 // GetLastVersion 取得某个客户端类型的最新版本
-func (ac *AdminClient) GetLastVersion(clientType yunke.ClientType) (client *yunke.BaseClient, err error) {
+func (ca *ClientAdmin) GetLastVersion(clientType yunke.ClientType) (client *yunke.BaseClient, err error) {
 	client = new(yunke.BaseClient)
-	err = ac.request(yunke.AdminApiGetFinalClientByTypeUrl, gox.HttpMethodGet, nil, map[string]string{
+	err = ca.request(yunke.AdminApiGetFinalClientByTypeUrl, gox.HttpMethodGet, nil, map[string]string{
 		"clientType": strconv.Itoa(int(clientType)),
 	}, client)
 
