@@ -11,8 +11,8 @@ import (
 	`github.com/storezhang/gox`
 )
 
-// Org 机构
-type Org struct {
+// OrgClient 机构管理客户端
+type OrgClient struct {
 	// Url 通信地址
 	Url string
 	// Name 机构名称
@@ -23,18 +23,18 @@ type Org struct {
 	Secret string
 }
 
-func (o *Org) requestApi(
-	path string,
+func (oc *OrgClient) requestApi(
+	path yunke.ApiPath,
 	method gox.HttpMethod,
 	params interface{}, pathParams map[string]string,
 	version yunke.ApiVersion,
 	rsp interface{},
 ) (err error) {
-	return o.request(path, yunke.UrlApiPrefix, method, params, pathParams, version, rsp)
+	return oc.request(path, yunke.UrlApiPrefix, method, params, pathParams, version, rsp)
 }
 
-func (o *Org) request(
-	path string,
+func (oc *OrgClient) request(
+	path yunke.ApiPath,
 	prefix string,
 	method gox.HttpMethod,
 	params interface{}, pathParams map[string]string,
@@ -52,8 +52,8 @@ func (o *Org) request(
 
 	// 修正请求地址为全路径
 	orgConfig := yunke.OrgConfig{
-		Url:  o.Url,
-		Name: o.Name,
+		Url:  oc.Url,
+		Name: oc.Name,
 	}
 	if url, err = orgConfig.GetUrl(path, pathParams, prefix, version); nil != err {
 		return
@@ -62,11 +62,11 @@ func (o *Org) request(
 		return
 	}
 
-	if authToken, err = token(domain, jwt.SigningMethodHS256, o.Secret); nil != err {
+	if authToken, err = token(domain, jwt.SigningMethodHS256, oc.Secret); nil != err {
 		return
 	}
 
-	req := NewResty().SetResult(rsp).SetHeader(gox.HeaderAuthorization, fmt.Sprintf("%s %s", o.AuthScheme, authToken))
+	req := NewResty().SetResult(rsp).SetHeader(gox.HeaderAuthorization, fmt.Sprintf("%s %s", oc.AuthScheme, authToken))
 	// 注入路径参数
 	if 0 != len(pathParams) {
 		req = req.SetPathParams(pathParams)
@@ -120,8 +120,8 @@ func (o *Org) request(
 	return
 }
 
-func (o Org) String() string {
-	jsonBytes, _ := json.MarshalIndent(o, "", "    ")
+func (oc OrgClient) String() string {
+	jsonBytes, _ := json.MarshalIndent(oc, "", "    ")
 
 	return string(jsonBytes)
 }

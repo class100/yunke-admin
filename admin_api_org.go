@@ -8,10 +8,10 @@ import (
 )
 
 // GetOrg 取得机构的信息
-func (a *Admin) GetOrg() (org *Org, err error) {
-	org = new(Org)
-	err = a.request(yunke.AdminApiGetOrgUrl, gox.HttpMethodGet, nil, map[string]string{
-		"id": strconv.FormatInt(a.Id, 10),
+func (ac *AdminClient) GetOrg() (org *yunke.Org, err error) {
+	org = new(yunke.Org)
+	err = ac.request(yunke.AdminApiGetOrgUrl, gox.HttpMethodGet, nil, map[string]string{
+		"id": strconv.FormatInt(ac.Id, 10),
 	}, org)
 
 	return

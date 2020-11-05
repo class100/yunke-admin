@@ -4,6 +4,7 @@ import (
 	`fmt`
 	`net/http`
 
+	`github.com/class100/yunke-core`
 	`github.com/dgrijalva/jwt-go`
 	`github.com/go-resty/resty/v2`
 	`github.com/storezhang/gox`
@@ -15,8 +16,8 @@ const (
 )
 
 type (
-	// Admin 云视课堂管理
-	Admin struct {
+	// AdminClient 云视课堂管理客户端
+	AdminClient struct {
 		// Id 产品编号
 		Id int64
 		// Url 地址
@@ -30,8 +31,8 @@ type (
 	}
 )
 
-func (a *Admin) request(
-	url string,
+func (ac *AdminClient) request(
+	path yunke.ApiPath,
 	method gox.HttpMethod,
 	params interface{}, pathParams map[string]string,
 	rsp interface{},
@@ -42,18 +43,18 @@ func (a *Admin) request(
 		expectedStatusCode int
 	)
 
-	if authToken, err = token(DefaultAdminDomain, jwt.GetSigningMethod(a.SigningMethod), a.Secret); nil != err {
+	if authToken, err = token(DefaultAdminDomain, jwt.GetSigningMethod(ac.SigningMethod), ac.Secret); nil != err {
 		return
 	}
 
-	req := NewResty().SetResult(rsp).SetHeader(gox.HeaderAuthorization, fmt.Sprintf("%s %s", a.AuthScheme, authToken))
+	req := NewResty().SetResult(rsp).SetHeader(gox.HeaderAuthorization, fmt.Sprintf("%s %s", ac.AuthScheme, authToken))
 	// 注入路径参数
 	if 0 != len(pathParams) {
 		req = req.SetPathParams(pathParams)
 	}
 
 	// 修正请求地址为全路径
-	url = fmt.Sprintf("%s/api/%s", a.Url, url)
+	url := fmt.Sprintf("%s/api/%s", ac.Url, path)
 
 	switch method {
 	case gox.HttpMethodGet:
