@@ -1,4 +1,4 @@
-package yunke
+package admin
 
 import (
 	`github.com/class100/yunke-core`

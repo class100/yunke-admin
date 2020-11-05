@@ -1,4 +1,4 @@
-package yunke
+package admin
 
 import (
 	`fmt`
