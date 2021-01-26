@@ -11,7 +11,7 @@ import (
 func token(domain string, method jwt.SigningMethod, secret string) (token string, err error) {
 	user := gox.BaseUser{
 		BaseStruct: gox.BaseStruct{
-			Id: 1,
+			IdStruct: gox.IdStruct{Id: 1},
 		},
 	}
 
